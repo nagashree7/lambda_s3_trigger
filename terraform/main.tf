@@ -58,10 +58,10 @@ resource "aws_lambda_function" "s3_lambda" {
   handler       = "index.lambda_handler"
   role          = aws_iam_role.lambda_role.arn
 
-  filename = "lambda_function.zip"
-
-  source_code_hash = filebase64sha256("lambda_function.zip")
+  filename         = "../lambda_function.zip"  # ✅ Ensure correct path
+  source_code_hash = filebase64sha256("../lambda_function.zip")  # ✅ Hash for tracking changes
 }
+
 
 # S3 Event Notification -> Lambda
 resource "aws_s3_bucket_notification" "s3_lambda_trigger" {

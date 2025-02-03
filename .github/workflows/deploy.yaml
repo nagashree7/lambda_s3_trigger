@@ -23,10 +23,16 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
+    # ✅ Ensure Lambda ZIP file is created
     - name: Zip Lambda Function
       run: |
         cd lambda
         zip -r ../lambda_function.zip index.py
+      working-directory: .  # Run in the root directory
+
+    # ✅ Verify the ZIP file exists before Terraform runs
+    - name: Verify Lambda ZIP exists
+      run: ls -lh lambda_function.zip
 
     - name: Terraform Init
       run: terraform init
